@@ -1,0 +1,5 @@
+{
+  "name": "Logo Style Cloner",
+  "description": "Upload a logo, specify changes, and use Gemini to generate a new version while preserving key style elements. Edit images with text prompts using Gemini 2.5 Flash Image.",
+  "requestFramePermissions": []
+}
