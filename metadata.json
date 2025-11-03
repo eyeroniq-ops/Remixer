@@ -1,5 +1,5 @@
 {
-  "name": "Logo Style Cloner",
-  "description": "Upload a logo, specify changes, and use Gemini to generate a new version while preserving key style elements. Edit images with text prompts using Gemini 2.5 Flash Image.",
+  "name": "Remixer",
+  "description": "Sube un logo, especifica los cambios y usa Gemini para generar una nueva versión conservando los elementos de estilo clave. Edita imágenes con indicaciones de texto usando Gemini 2.5 Flash Image.",
   "requestFramePermissions": []
 }

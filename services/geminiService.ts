@@ -2,7 +2,7 @@ import { GoogleGenAI, Modality } from "@google/genai";
 import { PreservedDetails } from '../types';
 
 if (!process.env.API_KEY) {
-    console.warn("API_KEY environment variable not set. Using a placeholder. Please set your API key for the app to function.");
+    console.warn("La variable de entorno API_KEY no está configurada. Usando un marcador de posición. Por favor, configura tu clave de API para que la aplicación funcione.");
 }
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "YOUR_API_KEY" });
@@ -24,50 +24,25 @@ const generatePrompt = (
             case 'style': return 'Style';
             default: return key;
         }
-    })
-    .join(', ');
+    });
 
-  let prompt = `
-You are a professional graphic designer specializing in logo adaptation. Your task is to edit the provided image based on the following specifications.
+  const prompt = `
+Analyze the provided logo image and adapt it based on the following instructions.
 
-**Core Task:** Adapt the existing logo style for a new brand.
-`;
+**New Brand Name:** ${newBrandName || 'Not provided. Keep original or remove text as appropriate.'}
+**Target Industry:** ${industry || 'Not provided.'}
 
-  if (newBrandName) {
-    prompt += `\n**New Brand Name:** "${newBrandName}"
-This name should replace any existing text in the logo. Make it fit naturally.
-`;
-  }
-  
-  if (industry) {
-    prompt += `\n**Industry / Business Sector:** "${industry}"
-The new logo should be appropriate for this industry.
-`;
-  }
+**Preserve from original image:**
+${preservedItems.length > 0 ? preservedItems.map(item => `- ${item}`).join('\n') : '- None. Use creative judgment based on the original style.'}
 
-  if (preservedItems) {
-    prompt += `\n**Elements to Preserve from Original Logo:**
-- ${preservedItems}
-`;
-  } else {
-    prompt += `\n**Elements to Preserve from Original Logo:**
-- None specified. Use your creative judgment based on the original style.
-`;
-  }
+**Required Modifications:**
+${changeDetails || 'Adapt the logo based on the new brand name, industry, and preservation settings.'}
 
-  if (changeDetails) {
-    prompt += `\n**Specific Changes to Make:**
-"${changeDetails}"
-`;
-  } else {
-    prompt += `\n**Specific Changes to Make:**
-"No specific additional changes were requested. Adapt the logo based on the new brand name, industry, and preservation settings."
-`;
-  }
-
-
-  prompt += `
-Please generate a new logo that incorporates the new brand name, applies the requested changes, and strictly preserves the specified elements. The output must be a high-quality image of the new logo. If 'Background Color' is not a preserved element, please make the background transparent.
+**Output Instructions:**
+- Generate a new logo that incorporates the new brand name and applies the required modifications.
+- Strictly adhere to the list of elements to preserve.
+- If 'Background Color' is NOT in the preservation list, the output logo must have a transparent background.
+- The final output must only be the image. Do not add any text, description, or commentary.
 `;
 
   return prompt;
@@ -116,10 +91,10 @@ export const editImage = async (
       }
     }
     
-    throw new Error("No image data found in the Gemini API response.");
+    throw new Error("No se encontraron datos de imagen en la respuesta de la API de Gemini.");
 
   } catch (error) {
     console.error("Error calling Gemini API:", error);
-    throw new Error(`Failed to generate image. ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(`Error al generar la imagen. ${error instanceof Error ? error.message : String(error)}`);
   }
 };

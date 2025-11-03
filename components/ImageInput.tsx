@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { OriginalImage } from '../types';
 
@@ -37,7 +36,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
     const file = event.target.files?.[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
-        setError('Please select a valid image file.');
+        setError('Por favor, selecciona un archivo de imagen válido.');
         setPreview(null);
         return;
       }
@@ -47,7 +46,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
         const image = await fileToBase64(file);
         onImageUpload(image);
       } catch (err) {
-        setError('Failed to read image file.');
+        setError('Error al leer el archivo de imagen.');
         console.error(err);
       }
     }
@@ -59,19 +58,19 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
 
   return (
     <div className="w-full">
-      <label className="block text-sm font-medium text-gray-300 mb-2">
-        Upload Logo
+      <label className="block text-sm font-medium text-[#f3c6ca] mb-2">
+        Subir Logo
       </label>
       <div
         onClick={handleClick}
-        className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 border-dashed rounded-md cursor-pointer hover:border-indigo-500 transition-colors"
+        className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-[#d12863] border-dashed rounded-md cursor-pointer hover:border-[#fc4986] transition-colors"
       >
         <div className="space-y-1 text-center">
           {preview ? (
-            <img src={preview} alt="Logo Preview" className="mx-auto h-24 w-auto rounded-md" />
+            <img src={preview} alt="Vista previa del logo" className="mx-auto h-24 w-auto rounded-md" />
           ) : (
             <svg
-              className="mx-auto h-12 w-12 text-gray-500"
+              className="mx-auto h-12 w-12 text-[#f3c6ca]/70"
               stroke="currentColor"
               fill="none"
               viewBox="0 0 48 48"
@@ -85,8 +84,8 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
               />
             </svg>
           )}
-          <div className="flex text-sm text-gray-500">
-            <p className="pl-1">{preview ? 'Click to change logo' : 'Click to upload a logo'}</p>
+          <div className="flex text-sm text-[#f3c6ca]/70 justify-center">
+            <p className="pl-1">{preview ? 'Haz clic para cambiar el logo' : 'Haz clic para subir un logo'}</p>
             <input
               ref={fileInputRef}
               id="file-upload"
@@ -97,10 +96,10 @@ const ImageInput: React.FC<ImageInputProps> = ({ onImageUpload }) => {
               onChange={handleFileChange}
             />
           </div>
-          <p className="text-xs text-gray-600">PNG, JPG, GIF up to 10MB</p>
+          <p className="text-xs text-[#f3c6ca]/60">PNG, JPG, GIF hasta 10MB</p>
         </div>
       </div>
-       {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+       {error && <p className="mt-2 text-sm text-[#fc4986]">{error}</p>}
     </div>
   );
 };
